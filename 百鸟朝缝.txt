@@ -1,0 +1,44 @@
+【百鸟朝缝】
+<<set _ccpeniscount to 0>>
+<<for _ccnpcloopcounter to 0; _ccnpcloopcounter lt $enemyno; _ccnpcloopcounter++>>
+    <<if $NPCList[_ccnpcloopcounter].penis isnot "none">><<set _ccpeniscount += 1>><</if>>
+<</for>>
+<<if ($combat is 1) and (_ccpeniscount gte 2)>>
+    <<set $mouthuse to 0>><<set $mouthstate to 0>><<set $mouthaction to 0>><<set $mouthactiondefault to 0>><<set $anususe to 0>><<set $anusstate to 0>><<set $anusaction to 0>><<set $anusactiondefault to 0>><<set $chestuse to 0>><<set $cheststate to 0>><<set $chestaction to 0>><<set $chestactiondefault to 0>>
+    <<for _ccnpcloopcounter to 0; _ccnpcloopcounter lt $enemyno; _ccnpcloopcounter++>>
+        <<if !(["vaginaentrancedouble","vaginadouble","vaginaimminentdouble"].includes($NPCList[_ccnpcloopcounter].penis))>>
+            <<set $NPCList[_ccnpcloopcounter].location to {"head": 0, "genitals": 0}>>
+            <<set $NPCList[_ccnpcloopcounter].lefthand to 0>>
+            <<set $NPCList[_ccnpcloopcounter].righthand to 0>>
+            <<set $NPCList[_ccnpcloopcounter].mouth to 0>>
+            <<set $NPCList[_ccnpcloopcounter].penis to "vaginaentrancedouble">>
+            <<set $vaginaaction to 0>>
+            <<set $vaginaactiondefault to "vaginatopenisdouble">>
+            <<set $vaginause to "penisdouble">>
+        <</if>>
+    <</for>>
+    <<set _ccpenisoutside to 0>>
+    <<for _ccnpcloopcounter to 0; _ccnpcloopcounter lt $enemyno; _ccnpcloopcounter++>>
+        <<if $NPCList[_ccnpcloopcounter].penis isnot "vaginadouble">>
+            <<set _ccpenisoutside++>>
+        <</if>>
+    <</for>>
+    <<for _ccnpcloopcounter to $enemyno - 1; _ccnpcloopcounter gte 0; _ccnpcloopcounter-->>
+        <<if ($NPCList[_ccnpcloopcounter].penis isnot "vaginadouble") and !(($vaginatarget is _ccnpcloopcounter) or ($vaginadoubletarget is _ccnpcloopcounter)) and (_ccpenisoutside gte 2)>>
+            <<set $vaginatarget to _ccnpcloopcounter>>
+        <</if>>
+    <</for>>
+    <<for _ccnpcloopcounter to $enemyno - 1; _ccnpcloopcounter gte 0; _ccnpcloopcounter-->>
+        <<if ($NPCList[_ccnpcloopcounter].penis isnot "vaginadouble") and !(($vaginatarget is _ccnpcloopcounter) or ($vaginadoubletarget is _ccnpcloopcounter))>>
+            <<set $vaginadoubletarget to _ccnpcloopcounter>>
+        <</if>>
+    <</for>>
+    <<if (_ccpenisoutside gte 2) and (($NPCList[$vaginatarget].penis is "vaginaimminentdouble") or ($NPCList[$vaginadoubletarget].penis is "vaginaimminentdouble"))>>
+        <<set $vaginastate to "doubleimminent">>
+    <<else>>
+        <<set $vaginastate to "doubleentrance">>
+    <</if>>
+    <<if _ccpenisoutside lte 1>>
+        <<set $vaginastate to "doublepenetrated">>
+    <</if>>
+<</if>>
